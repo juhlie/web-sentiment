@@ -1,27 +1,27 @@
 'use strict';
 
-let changeColor = document.getElementById('changeColor');
-console.log(changeColor)
+// change color functions from tutorial
 
-chrome.storage.sync.get('color', function(data) {
-    changeColor.style.backgroundColor = data.color; 
-    changeColor.setAttribute('value', data.color);
-});
+// let changeColor = document.getElementById('changeColor');
+// console.log(changeColor)
 
-changeColor.onclick = function(element) {
-    let color = element.target.value;
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            chrome.tabs.executeScript(
-                tabs[0].id,
-                {code: 'document.body.style.backgroundColor = "' + color + '";'});
-        });
-};
+// chrome.storage.sync.get('color', function(data) {
+//     changeColor.style.backgroundColor = data.color; 
+//     changeColor.setAttribute('value', data.color);
+// });
 
-let sendRequest = document.getElementById('send-request');
+// changeColor.onclick = function(element) {
+//     let color = element.target.value;
+//         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+//             chrome.tabs.executeScript(
+//                 tabs[0].id,
+//                 {code: 'document.body.style.backgroundColor = "' + color + '";'});
+//         });
+// };
 
-sendRequest.addEventListener('click', apiCall);
+// our real extension starts here //
 
-const url = `https://language.googleapis.com/v1beta2/documents:analyzeSentiment?key=${YOUR_API_KEY}`;
+const url = "https://language.googleapis.com/v1beta2/documents:analyzeSentiment?key=YOUR_API_KEY";
 const someJson = {
     "document":{
       "type":"PLAIN_TEXT",
@@ -31,22 +31,50 @@ const someJson = {
     "encodingType":"UTF8"
   };
 
-  async function apiCall(url = '', data = {}) {
-      const response = await fetch(url, {
-          method: 'POST',
-          mode: 'cors',
-          credentials: 'omit',
-          headers: {'Content-Type': 'application/json'},
-          redirect: 'follow',
-          referrerPolicy: 'no-referrer',
-          body: JSON.stringify(data)
-      })
-      .then(response => response.json())
-      .then(data => {
-          console.log('Success:', data);
-      })
-      .catch((error) => {
-          console.error('Error:', error);
-      });
-    
-  };
+
+$(document).ready(function() {
+    let analyzeBtn = document.getElementById('analyze');
+})
+
+
+document.addEventListener('DomContentLoaded', function(data) => {
+    let analyzeBtn = document.getElementById('evt');
+    analyzeBtn.addEventListener('click', eventDemo, false);
+    alert('Clicked!');
+});
+
+// look at this beautiful jquery
+// console.log('Extension is on!');
+
+// $('#analyze').on('click', () => {
+//     console.log('Clicked!');
+// });
+
+// this would be the useful bit. above lines were just for testing
+// sendRequestBtn.on('click', (evt) => {
+//     $.post(url, someJson, (res) => {
+//         alert('Clicked!');
+//     });
+// });
+
+
+// fetch attempt
+// async function apiCall(url = '', data = {}) {
+//     const response = await fetch(url, {
+//         method: 'POST',
+//         mode: 'cors',
+//         credentials: 'omit',
+//         headers: {'Content-Type': 'application/json'},
+//         redirect: 'follow',
+//         referrerPolicy: 'no-referrer',
+//         body: JSON.stringify(data)
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log('Success:', data);
+//     })
+//     .catch((error) => {
+//         console.error('Error:', error);
+//     });
+
+// };
