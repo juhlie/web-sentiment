@@ -1,20 +1,41 @@
-'use strict';
-
-chrome.runtime.onInstalled.addListener(function() {
-    chrome.storage.sync.set({color: '#1F76E9'}, function() {
-        console.log('The color is blue.');
-    });
-    chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-        chrome.declarativeContent.onPageChanged.addRules([{
-            conditions: [new chrome.declarativeContent.PageStateMatcher({
-                pageUrl: {hostEquals: 'developer.chrome.com'},
-            })],
-            actions: [new chrome.declarativeContent.ShowPageAction()]
-        }]);
-    });
+chrome.browserAction.onClicked.addListener(function(tab) {
+  chrome.tabs.executeScript(
+    tab.id,
+   {file: 'run_in_page.js'});  
 });
 
-const script = document.createElement('script');
-script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js';
-script.type = 'text/javascript';
-document.getElementsByTagName('head')[0].appendChild(script);
+// Add listener for messages from the script we inject
+// and run inside the active webpage.
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log(sender.tab ?
+                "from a content script:" + sender.tab.url :
+                "from the extension");
+
+    // full text of the webpage is in the parameter to this message
+    // which we can access via request.parameterName
+    let fullPageText = request.pageText;
+
+    // Code to change icon of the extension.
+    let score = 100;
+    if (score == 1) {
+      // very negative
+      chrome.browserAction.setIcon({path: "images/Sad.png"}, function() {
+      alert("Are you sure want to read this right now? This page is sad. :( ")
+      });
+      // very positive
+    } else if (score == 100) {
+      chrome.browserAction.setIcon({path: "images/Smile.png"})
+      alert("This is a happy page if you need a pick me up. :D ")
+    }
+    // super neutral
+    else {
+      chrome.browserAction.setIcon({path: "images/Smile.png"})
+      alert("This page is neutral. Meh. :-| ")
+    }
+
+    if (request.color) {
+      sendResponse({});
+    }
+  }
+);

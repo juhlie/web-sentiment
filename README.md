@@ -1,3 +1,19 @@
-# Webpage Sentiment
+## Athena Hacks 2021
 
-A Google Chrome extension that analyzes the overall sentiment of the current webpage.
+## Team #54 : Better Team
+Devashni Priyadarshni, Julie Lam, Loranne Nasir
+
+## Idea
+Webpage Sentiment: A Google Chrome extension that analyzes the overall sentiment of the current webpage.
+
+## Tech Stack
+
+## Use Cases / Impact
+
+## User Story
+
+## Challenges/ Lesson Learnt
+
+## Accomplishments
+
+## Next Steps
