@@ -1,4 +1,4 @@
-const YOUR_API_KEY = 'fill this in';
+const YOUR_API_KEY = 'fill in here';
 
 const gCloudSentimentURL = `https://language.googleapis.com/v1beta2/documents:analyzeSentiment?key=${YOUR_API_KEY}`;
 

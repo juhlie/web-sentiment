@@ -17,21 +17,21 @@ chrome.runtime.onMessage.addListener(
     let fullPageText = request.pageText;
 
     // Code to change icon of the extension.
-    let score = 100;
+    let score = 1;
     if (score == 1) {
       // very negative
-      chrome.browserAction.setIcon({path: "images/Sad.png"}, function() {
+      chrome.browserAction.setIcon({path: "icons/negative_120.png"}, function() {
       alert("Are you sure want to read this right now? This page is sad. :( ")
       });
       // very positive
     } else if (score == 100) {
-      chrome.browserAction.setIcon({path: "images/Smile.png"})
+      chrome.browserAction.setIcon({path: "icons/strong_positive_120.png"})
       alert("This is a happy page if you need a pick me up. :D ")
     }
     // super neutral
     else {
-      chrome.browserAction.setIcon({path: "images/Smile.png"})
-      alert("This page is neutral. Meh. :-| ")
+      chrome.browserAction.setIcon({path: "icons/neutral_120.png"})
+      alert("This page is neutral. Meh. :| ")
     }
 
     if (request.color) {
