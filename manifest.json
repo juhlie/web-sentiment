@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+  "name": "Sentiment Analyzer",
+  "version": "0.1",
+  "permissions": [],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "browser_action": {
+    "default_icon": {
+      "16": "icons/Smile.png"
+    }
+  }
+}
