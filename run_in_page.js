@@ -5,7 +5,7 @@ let myDocumentText = document.documentElement.innerText;
 
 //TODO: call sentiment analysis api here with myDocumentText(string data type) as a param
 // response format: documentSentiment: {magnitude: 37.2, score: 0.1}
-const GCLOUD_API_KEY = 'api key goes here';
+const GCLOUD_API_KEY = 'AIzaSyBdwRwYzXPzxGwU277pCFW2noaEoIFXOts';
 
 const gCloudSentimentURL = `https://language.googleapis.com/v1beta2/documents:analyzeSentiment?key=${GCLOUD_API_KEY}`;
 
@@ -27,12 +27,16 @@ fetch(gCloudSentimentURL, {
   body: JSON.stringify(body),
 })
   .then((response) => response.json())
-  .then((response) => console.log(response));
+  .then((response) => {
+    console.log(response);
+    sendScoreToExtension(response.documentSentiment.score);
+  });
 
-
-
-// Send a message back to the extension, with the parameter
-// 'pageText' set to the entire webpage text
-chrome.runtime.sendMessage({pageText: myDocumentText}, function(response) {
+function sendScoreToExtension(scoreToSend) {
+  // Send a message back to the extension, with the parameter
+  // 'pageText' set to the entire webpage text
+  chrome.runtime.sendMessage({score: scoreToSend}, function(response) {
     console.log(response);
   });
+}
+

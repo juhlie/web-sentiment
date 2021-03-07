@@ -12,25 +12,23 @@ chrome.runtime.onMessage.addListener(
                 "from a content script:" + sender.tab.url :
                 "from the extension");
 
-    // full text of the webpage is in the parameter to this message
-    // which we can access via request.parameterName
-    let fullPageText = request.pageText;
-
     // Code to change icon of the extension.
-    let score = 100;
-    if (score == 1) {
+    let score = request.score;
+    // alert for testing if the score is being passed
+    // alert('score received! it is ' + String(score));
+    if (score <= -0.2) {
       // very negative
-      chrome.browserAction.setIcon({path: "images/Sad.png"}, function() {
+      chrome.browserAction.setIcon({path: "icons/negative_120.png"}, function() {
       alert("Are you sure want to read this right now? This page is sad. :( ")
       });
       // very positive
-    } else if (score == 100) {
-      chrome.browserAction.setIcon({path: "images/Smile.png"})
+    } else if (score >= 0.2) {
+      chrome.browserAction.setIcon({path: "icons/strong_positive_120.png"})
       alert("This is a happy page if you need a pick me up. :D ")
     }
     // super neutral
-    else {
-      chrome.browserAction.setIcon({path: "images/Smile.png"})
+    else if ((score == 0) || (score == 0.1)) {
+      chrome.browserAction.setIcon({path: "icons/neutral_120.png"})
       alert("This page is neutral. Meh. :-| ")
     }
 
